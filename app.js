@@ -1,7 +1,6 @@
-const os = require('os');
 const fs = require('fs');
 
-const genders = ['m', 'f'];
+const genders = ['M', 'F'];
 
 const maleNames = [
     'John',
@@ -15,10 +14,10 @@ const maleNames = [
     'Freddy',
     'Bruce',
     'Tom',
-    'Luise'
-]
+    'Luise',
+];
 
-const famaleNames = [
+const femaleNames = [
     'Victoria',
     'Johanna',
     'Megan',
@@ -30,8 +29,8 @@ const famaleNames = [
     'Uma',
     'Katarina',
     'Evelyn',
-    'Fiora'
-]
+    'Fiora',
+];
 
 const lastNames = [
     'Kowalsky',
@@ -45,5 +44,51 @@ const lastNames = [
     'Jackson',
     'Johanson',
     'Ragnarson',
-    'Novak'
-]
+    'Novak',
+];
+
+const people = [];
+const maxAge = 78;
+const minAge = 18;
+
+const randChoice = (arr) => {
+
+    const randomGenerate = Math.floor(Math.random() * arr.length);
+    const item = arr[randomGenerate];
+
+    return item;
+}
+
+for (let i = 0; i < 20; i++) {
+
+    const genderRandom = randChoice(genders);
+
+    if (genderRandom == 'F') {
+        name = randChoice(femaleNames);
+    } else {
+        name = randChoice(maleNames);
+    };
+    const lastName = randChoice(lastNames);
+
+    const generatedPerson = {
+        firstName: name,
+        lastName: lastName,
+        gender: genderRandom,
+        age: Math.floor(Math.random() * (maxAge - minAge +1)) + minAge,
+        email: `${name.toLowerCase()}.${lastName.toLowerCase()}@email.com`,
+        telephone: `+48${Math.floor(100000000 + Math.random() * 900000000)}`,
+    };
+
+    people.push(generatedPerson);
+};
+
+
+console.log('people', people);
+
+const data = JSON.stringify(people);
+
+
+fs.writeFile('people.json', data, (err) => {
+    if (err) throw ('Something went wrong', err);
+    console.log('The file has been saved!');
+});
